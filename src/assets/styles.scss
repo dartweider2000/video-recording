@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "element-plus/dist/index.css";
+
+:root {
+  --web-capture-height: auto;
+  --web-capture-width: 100%;
+
+  --max-container-width: 768px;
+  --container-padding: 10px;
+}
