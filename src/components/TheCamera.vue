@@ -1,13 +1,10 @@
 <script setup lang="ts">
-  import { useMediaAreaSizes } from "@/composables/useMediaAreaSizes";
   import { useMediaStore } from "@/stores/mediaStore";
-  import { ElSkeleton, ElSkeletonItem } from "element-plus";
   import { storeToRefs } from "pinia";
   import { onMounted, ref, watch } from "vue";
+  import MediaArea from "@/components/MediaArea.vue";
 
   const videoEl = ref<HTMLVideoElement | null>(null);
-
-  useMediaAreaSizes();
   const { mediaStream, isMediaStreamLoading } = storeToRefs(useMediaStore());
 
   onMounted(() => {
@@ -22,45 +19,19 @@
 </script>
 
 <template>
-  <div class="camera">
-    <ElSkeleton
-      class="camera__skeleton full"
-      :loading="isMediaStreamLoading"
-      animated
-    >
-      <template #template>
-        <ElSkeletonItem variant="image" style="width: 100%; height: 100%" />
-      </template>
-    </ElSkeleton>
+  <MediaArea :loading="isMediaStreamLoading">
     <video
       v-show="!isMediaStreamLoading"
       ref="videoEl"
-      class="camera__video full"
-      muted
+      class="video"
       autoplay
+      muted
     ></video>
-  </div>
+  </MediaArea>
 </template>
 
 <style scoped lang="scss">
-  .camera {
-    @apply relative w-[--web-capture-width] h-[--web-capture-height] rounded-[20px] overflow-hidden;
-    // .camera__skeleton
-    &__skeleton {
-    }
-    // .camera__content
-    &__content {
-    }
-    // .camera__video
-    &__video {
-      @apply object-cover object-center;
-    }
-    // .camera__empty
-    &__empty {
-    }
-  }
-
-  .full {
-    @apply absolute top-0 left-0 w-full h-full;
+  .video {
+    @apply absolute top-0 left-0 w-full h-full object-cover object-center;
   }
 </style>
