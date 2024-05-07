@@ -1,17 +1,29 @@
 <script setup lang="ts">
   import { useMediaStore } from "@/stores/mediaStore";
   import { storeToRefs } from "pinia";
-  import { onMounted, ref, watch } from "vue";
+  import { onMounted, watch } from "vue";
   import MediaArea from "@/components/MediaArea.vue";
+  import { useHtmlElementsStore } from "@/stores/htmlElementsStore";
 
-  const videoEl = ref<HTMLVideoElement | null>(null);
-  const { mediaStream, isMediaStreamLoading } = storeToRefs(useMediaStore());
+  const { mediaStream, isMediaStreamLoading, originalSize } =
+    storeToRefs(useMediaStore());
+  const { streamVideoEl } = storeToRefs(useHtmlElementsStore());
 
   onMounted(() => {
     watch(
       mediaStream,
       () => {
-        if (mediaStream.value) videoEl.value!.srcObject = mediaStream.value;
+        if (mediaStream.value) {
+          streamVideoEl.value!.srcObject = mediaStream.value;
+
+          const { width, height } = mediaStream.value
+            .getVideoTracks()[0]
+            .getSettings();
+          originalSize.value = {
+            width: width!,
+            height: height!,
+          };
+        }
       },
       { immediate: true },
     );
@@ -22,7 +34,7 @@
   <MediaArea :loading="isMediaStreamLoading">
     <video
       v-show="!isMediaStreamLoading"
-      ref="videoEl"
+      ref="streamVideoEl"
       class="video"
       autoplay
       muted

@@ -35,3 +35,8 @@ export interface IConvertedTime {
 export interface IResultForm {
   fileName: string;
 }
+
+export interface ISize {
+  width: number;
+  height: number;
+}

@@ -33,15 +33,11 @@ export const useResultStore = defineStore("resultStore", () => {
     ],
   });
 
-  const fileNameParser = (v: string): string => {
-    const newV = v.replace(/[^a-zA-z0-9_-]/gi, "");
-
-    console.log(v, newV);
-    return newV;
-  };
+  const fileNameParser = (v: string): string =>
+    v.replace(/[^a-zA-z0-9_-]/gi, "");
 
   const fileExtensionName = computed(() =>
-    selectedMode.value === Mode.Video ? ".webm" : ".jpg",
+    selectedMode.value === Mode.Video ? ".webm" : ".png",
   );
 
   return {

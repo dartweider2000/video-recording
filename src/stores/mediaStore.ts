@@ -1,11 +1,19 @@
+import type { ISize } from "@/types";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 export const useMediaStore = defineStore("mediaStore", () => {
+  const router = useRouter();
+
   const mediaStream = ref<MediaStream | null>(null);
   const isMediaStreamLoading = ref<boolean>(true);
   const isLoadingError = ref<boolean>(false);
+
+  const originalSize = ref<ISize>({
+    height: 0,
+    width: 0,
+  });
 
   const mediaConstraints = ref<MediaStreamConstraints>({
     video: true,
@@ -34,7 +42,7 @@ export const useMediaStore = defineStore("mediaStore", () => {
   watch(
     isLoadingError,
     async () => {
-      if (isLoadingError.value) await useRouter().replace("/error");
+      if (isLoadingError.value) await router.replace("/error");
     },
     { immediate: true },
   );
@@ -44,5 +52,6 @@ export const useMediaStore = defineStore("mediaStore", () => {
     isMediaStreamLoading,
     isLoadingError,
     initMediaStream,
+    originalSize,
   };
 });

@@ -1,0 +1,35 @@
+<script setup lang="ts">
+  import { useImageModeStore } from "@/stores/imageModeStore";
+  import { ElButton, ElIcon } from "element-plus";
+  import { storeToRefs } from "pinia";
+
+  const store = useImageModeStore();
+  const { isMakingImage } = storeToRefs(store);
+  const { makeImage } = store;
+</script>
+
+<template>
+  <div class="grid">
+    <ElButton type="success" :disabled="isMakingImage" @click="makeImage">
+      <ElIcon class="el-icon--left" :size="20">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="white"
+        >
+          <path
+            d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"
+          ></path>
+          <path
+            d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z"
+          ></path>
+        </svg>
+      </ElIcon>
+      Сделать снимок
+    </ElButton>
+  </div>
+</template>
+
+<style scoped lang="scss"></style>
