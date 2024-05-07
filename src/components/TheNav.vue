@@ -3,6 +3,7 @@
   import { useRoute, useRouter } from "vue-router";
 
   const route = useRoute();
+  const router = useRouter();
   const path = computed(() => route.path);
 
   const showBackArrow = ref<boolean>(false);
@@ -16,7 +17,7 @@
   );
 
   const backButtonClickHandler = async () => {
-    await useRouter().push("/");
+    await router.push("/");
   };
 </script>
 

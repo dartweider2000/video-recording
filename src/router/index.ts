@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, useRouter } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import { useMediaStore } from "@/stores/mediaStore";
 import { storeToRefs } from "pinia";
+import ResultView from "@/views/ResultView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,6 +10,10 @@ const router = createRouter({
     {
       path: "/",
       component: HomeView,
+    },
+    {
+      path: "/result",
+      component: ResultView,
     },
   ],
 });

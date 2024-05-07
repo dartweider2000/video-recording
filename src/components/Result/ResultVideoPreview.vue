@@ -23,10 +23,13 @@
       :src="resultBlobUrl"
       ref="videoEl"
       class="video"
-      autoplay
-      muted
+      controls
     ></video>
   </MediaArea>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .video {
+    @apply absolute top-0 left-0 w-full h-full object-cover object-center;
+  }
+</style>

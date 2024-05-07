@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 
 export const useVideoRecordingStore = defineStore("videoRecordingStore", () => {
   const { mediaStream } = storeToRefs(useMediaStore());
+  const router = useRouter();
 
   const mediaRecorder = ref<MediaRecorder | null>(null);
   const videoDuration = ref<number>(0);
@@ -32,7 +33,7 @@ export const useVideoRecordingStore = defineStore("videoRecordingStore", () => {
         resultBlobUrl.value = URL.createObjectURL(data);
         duration.value = videoDuration.value;
 
-        await useRouter().push("/result");
+        await router.push("/result");
       },
     );
 
