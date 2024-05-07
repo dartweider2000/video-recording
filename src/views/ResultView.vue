@@ -13,6 +13,9 @@
     type FormInstance,
   } from "element-plus";
   import { onUnmounted, ref } from "vue";
+  import { useRouter } from "vue-router";
+
+  const router = useRouter();
 
   const resultStore = useResultStore();
   const {
@@ -40,6 +43,10 @@
     link.click();
   };
 
+  const cropperButtonHandler = async () => {
+    await router.push("/cropper");
+  };
+
   onUnmounted(() => {
     refreshFileName();
   });
@@ -50,7 +57,11 @@
     <ResultVideoPreview v-if="selectedMode === Mode.Video" />
     <ResultImagePreview v-else />
     <ElForm
-      class="grid content-between"
+      class="grid"
+      :class="{
+        'grid-rows-[auto,auto,1fr]': selectedMode === Mode.Photo,
+        'grid-rows-[auto,1fr]': selectedMode === Mode.Video,
+      }"
       :model="formModel"
       :rules="formRules"
       ref="formInstance"
@@ -68,7 +79,30 @@
         </ElInput>
       </ElFormItem>
       <ElButton
+        v-if="selectedMode === Mode.Photo"
+        type="primary"
+        :disabled="!formModel.fileName"
+        @click="cropperButtonHandler"
+      >
+        <ElIcon class="el-icon--left" :size="20">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="white"
+          >
+            <path
+              d="M19 7.5C19 6.121 17.879 5 16.5 5H8V2H5v3H2v3h14v14h3v-3h3v-3h-3V7.5z"
+            ></path>
+            <path d="M8 10H5v6.5C5 17.879 6.121 19 7.5 19H14v-3H8v-6z"></path>
+          </svg>
+        </ElIcon>
+        Обрезать
+      </ElButton>
+      <ElButton
         type="success"
+        class="self-end"
         :disabled="!formModel.fileName"
         @click="downloadHandler"
       >
