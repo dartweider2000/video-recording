@@ -4,16 +4,11 @@
 
   const props = defineProps<{
     tick: boolean;
-    stopTimer: boolean;
   }>();
 
-  const emit = defineEmits<{
-    "get-time": [ms: number];
-  }>();
+  const totalMilliseconds = defineModel<number>();
+  const { tick } = toRefs(props);
 
-  const { tick, stopTimer } = toRefs(props);
-
-  const totalMilliseconds = ref<number>(0);
   const worker = ref<Worker | null>(null);
 
   enum Help {
@@ -37,7 +32,7 @@
   watch(
     totalMilliseconds,
     () => {
-      let ms = totalMilliseconds.value;
+      let ms = totalMilliseconds.value!;
       clear();
 
       if (ms >= Help.MillisecondsInHour) {
@@ -89,19 +84,6 @@
             status: TimerWebWorkerStatus.Pause,
           };
           worker.value!.postMessage(message);
-        }
-      },
-      { immediate: true },
-    );
-
-    watch(
-      stopTimer,
-      () => {
-        if (stopTimer.value) {
-          // станавливаю таймер и обнуляю его время
-
-          emit("get-time", totalMilliseconds.value);
-          totalMilliseconds.value = 0;
         }
       },
       { immediate: true },

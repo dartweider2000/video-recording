@@ -1,34 +1,13 @@
 <script setup lang="ts">
   import { ElButton, ElIcon } from "element-plus";
-  import { computed, ref } from "vue";
   import TheTimer from "@/components/TheTimer.vue";
+  import { useVideoRecordingStore } from "@/stores/videoRecordingStore";
+  import { storeToRefs } from "pinia";
 
-  const isRecordingStarted = ref<boolean>(false);
-  const isRecordingOnPause = ref<boolean>(false);
-  const stopTimer = ref<boolean>(false);
-
-  const startButtonClick = () => {
-    isRecordingStarted.value = true;
-  };
-
-  const pauseButtonClick = () => {
-    isRecordingOnPause.value = !isRecordingOnPause.value;
-  };
-
-  const stopButtonClick = () => {
-    isRecordingStarted.value = false;
-    isRecordingOnPause.value = false;
-    stopTimer.value = true;
-  };
-
-  const isTimerTick = computed(
-    () => isRecordingStarted.value && !isRecordingOnPause.value,
-  );
-
-  const getTimeHandler = (ms: number) => {
-    stopTimer.value = false;
-    console.log(ms, "res");
-  };
+  const store = useVideoRecordingStore();
+  const { videoDuration, isRecordingOnPause, isRecordingStarted, isLive } =
+    storeToRefs(store);
+  const { startRecording, pauseRecording, stopRecording } = store;
 </script>
 
 <template>
@@ -38,7 +17,7 @@
         v-show="!isRecordingStarted"
         class="basis-auto flex-1"
         type="success"
-        @click="startButtonClick"
+        @click="startRecording"
       >
         <ElIcon class="el-icon--left" :size="20">
           <svg
@@ -54,16 +33,12 @@
         Начать запись
       </ElButton>
       <div v-show="isRecordingStarted" class="grid flex-1 gap-[5px]">
-        <TheTimer
-          :tick="isTimerTick"
-          :stop-timer="stopTimer"
-          @get-time="getTimeHandler"
-        />
+        <TheTimer v-model="videoDuration" :tick="isLive" />
         <ElButton
           v-if="isRecordingStarted"
           type="warning"
           :disabled="!isRecordingStarted"
-          @click="pauseButtonClick"
+          @click="pauseRecording"
         >
           <ElIcon class="el-icon--left" :size="20">
             <svg
@@ -92,7 +67,7 @@
         <ElButton
           v-if="isRecordingStarted"
           type="danger"
-          @click="stopButtonClick"
+          @click="stopRecording"
         >
           <ElIcon class="el-icon--left" :size="20">
             <svg

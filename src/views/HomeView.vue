@@ -2,24 +2,10 @@
   import { ElOption, ElSelect } from "element-plus";
   import TheCamera from "@/components/TheCamera.vue";
   import TheVideoMode from "@/components/TheVideoMode.vue";
-  import { ref } from "vue";
+  import { useResultStore } from "@/stores/resultStore";
+  import { storeToRefs } from "pinia";
 
-  enum Mode {
-    Photo = "photo",
-    Video = "video",
-  }
-
-  interface IOption {
-    mode: Mode;
-    name: string;
-  }
-
-  const modeList = ref<IOption[]>([
-    { name: "Фотография", mode: Mode.Photo },
-    { name: "Видео", mode: Mode.Video },
-  ]);
-
-  const selectedMode = ref<Mode>(Mode.Video);
+  const { modeList, selectedMode } = storeToRefs(useResultStore());
 </script>
 
 <template>
