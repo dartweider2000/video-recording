@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { convertUnixTime } from "@/helpers/convertUnixTime";
   import { TimerWebWorkerStatus, type ITimerWorkerData } from "@/types";
   import { onBeforeMount, ref, toRefs, watch } from "vue";
 
@@ -11,46 +12,25 @@
 
   const worker = ref<Worker | null>(null);
 
-  enum Help {
-    MillisecondsInHour = 1000 * 60 * 60,
-    MillisecondsInMinet = 1000 * 60,
-    MillisecondInSecond = 1000,
-  }
-
   const hours = ref<number>(0);
-  const minuts = ref<number>(0);
+  const minutes = ref<number>(0);
   const seconds = ref<number>(0);
   const milliseconds = ref<number>(0);
-
-  const clear = () => {
-    hours.value = 0;
-    minuts.value = 0;
-    seconds.value = 0;
-    milliseconds.value = 0;
-  };
 
   watch(
     totalMilliseconds,
     () => {
-      let ms = totalMilliseconds.value!;
-      clear();
+      const {
+        hours: h,
+        milliseconds: mil,
+        minutes: min,
+        seconds: s,
+      } = convertUnixTime(totalMilliseconds.value!);
 
-      if (ms >= Help.MillisecondsInHour) {
-        hours.value = ~~(ms / Help.MillisecondsInHour);
-        ms -= hours.value * Help.MillisecondsInHour;
-      }
-
-      if (ms >= Help.MillisecondsInMinet) {
-        minuts.value = ~~(ms / Help.MillisecondsInMinet);
-        ms -= minuts.value * Help.MillisecondsInMinet;
-      }
-
-      if (ms >= Help.MillisecondInSecond) {
-        seconds.value = ~~(ms / Help.MillisecondInSecond);
-        ms -= seconds.value * Help.MillisecondInSecond;
-      }
-
-      milliseconds.value = ms;
+      hours.value = h;
+      minutes.value = min;
+      seconds.value = s;
+      milliseconds.value = mil;
     },
     { immediate: true },
   );
@@ -101,7 +81,7 @@
 <template>
   <div class="timer flex justify-center text-[20px]">
     <div class="">{{ convertTimeToPresentableForm(hours) }}</div>
-    <div class="">{{ convertTimeToPresentableForm(minuts) }}</div>
+    <div class="">{{ convertTimeToPresentableForm(minutes) }}</div>
     <div class="">{{ convertTimeToPresentableForm(seconds) }}</div>
     <div class="">
       {{ convertTimeToPresentableForm(milliseconds.toString().slice(0, 2)) }}

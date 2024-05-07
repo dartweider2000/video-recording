@@ -11,3 +11,11 @@
   --max-container-width: 768px;
   --container-padding: 10px;
 }
+
+.el-button {
+  @apply py-[20px];
+}
+
+.el-button + .el-button {
+  @apply m-0;
+}

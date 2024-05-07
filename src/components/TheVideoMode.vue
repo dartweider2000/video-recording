@@ -87,9 +87,4 @@
   </div>
 </template>
 
-<style scoped lang="scss">
-  :deep(.el-button) {
-    margin: 0;
-    @apply py-[20px];
-  }
-</style>
+<style scoped lang="scss"></style>

@@ -1,7 +1,8 @@
-import type { IOption } from "@/types";
+import type { IOption, IResultForm } from "@/types";
 import { Mode } from "@/types";
+import type { FormRules } from "element-plus";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useResultStore = defineStore("resultStore", () => {
   const resultBlobUrl = ref<string>("");
@@ -14,10 +15,44 @@ export const useResultStore = defineStore("resultStore", () => {
 
   const selectedMode = ref<Mode>(Mode.Video);
 
+  const formModel = ref<IResultForm>({
+    fileName: "my-media",
+  });
+
+  const refreshFileName = () => {
+    formModel.value.fileName = "my-media";
+  };
+
+  const formRules = ref<FormRules<IResultForm>>({
+    fileName: [
+      {
+        required: true,
+        message: "Введите имя файла",
+        trigger: ["change", "blur"],
+      },
+    ],
+  });
+
+  const fileNameParser = (v: string): string => {
+    const newV = v.replace(/[^a-zA-z0-9_-]/gi, "");
+
+    console.log(v, newV);
+    return newV;
+  };
+
+  const fileExtensionName = computed(() =>
+    selectedMode.value === Mode.Video ? ".webm" : ".jpg",
+  );
+
   return {
     resultBlobUrl,
     videoDuration,
     modeList,
     selectedMode,
+    formModel,
+    fileExtensionName,
+    formRules,
+    fileNameParser,
+    refreshFileName,
   };
 });
