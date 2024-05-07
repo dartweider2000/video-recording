@@ -20,7 +20,9 @@
 </script>
 
 <template>
-  <div class="work-page grid gap-[10px]">
+  <div
+    class="work-page grid gap-[10px] content-start grid-rows-[auto,auto,1fr]"
+  >
     <TheCamera />
     <ElSelect v-model="selectedMode" :disabled="disableSelect">
       <ElOption

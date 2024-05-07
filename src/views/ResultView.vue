@@ -46,64 +46,50 @@
 </script>
 
 <template>
-  <div class="result-page">
-    <div class="result-page__preview">
-      <ResultVideoPreview v-if="selectedMode === Mode.Video" />
-      <ResultImagePreview v-else />
-    </div>
-    <div class="result-page__actions">
-      <ElForm
-        :model="formModel"
-        :rules="formRules"
-        ref="formInstance"
-        label-position="top"
-        :hide-required-asterisk="true"
-      >
-        <ElFormItem label="Имя файла" prop="fileName">
-          <ElInput
-            v-model.trim="formModel.fileName"
-            placeholder="Имя файла"
-            :formatter="(v: string) => v"
-            :parser="fileNameParser"
-          >
-            <template #append>{{ fileExtensionName }}</template>
-          </ElInput>
-        </ElFormItem>
-        <ElButton
-          type="success"
-          :disabled="!formModel.fileName"
-          @click="downloadHandler"
+  <div class="grid gap-[10px] grid-rows-[auto,1fr]">
+    <ResultVideoPreview v-if="selectedMode === Mode.Video" />
+    <ResultImagePreview v-else />
+    <ElForm
+      class="grid content-between"
+      :model="formModel"
+      :rules="formRules"
+      ref="formInstance"
+      label-position="top"
+      :hide-required-asterisk="true"
+    >
+      <ElFormItem label="Имя файла" prop="fileName">
+        <ElInput
+          v-model.trim="formModel.fileName"
+          placeholder="Имя файла"
+          :formatter="(v: string) => v"
+          :parser="fileNameParser"
         >
-          <ElIcon class="el-icon--left" :size="20">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="white"
-            >
-              <path d="M19 9h-4V3H9v6H5l7 8zM4 19h16v2H4z"></path>
-            </svg>
-          </ElIcon>
-          Скачать
-        </ElButton>
-      </ElForm>
-    </div>
+          <template #append>{{ fileExtensionName }}</template>
+        </ElInput>
+      </ElFormItem>
+      <ElButton
+        type="success"
+        :disabled="!formModel.fileName"
+        @click="downloadHandler"
+      >
+        <ElIcon class="el-icon--left" :size="20">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="white"
+          >
+            <path d="M19 9h-4V3H9v6H5l7 8zM4 19h16v2H4z"></path>
+          </svg>
+        </ElIcon>
+        Скачать
+      </ElButton>
+    </ElForm>
   </div>
 </template>
 
 <style scoped lang="scss">
-  .result-page {
-    @apply grid gap-[10px];
-    // .result-page__preview
-    &__preview {
-    }
-    // .result-page__actions
-    &__actions {
-      @apply grid;
-    }
-  }
-
   :deep(.el-form-item__label) {
     @apply text-[16px] font-medium;
   }

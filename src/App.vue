@@ -11,9 +11,9 @@
 </script>
 
 <template>
-  <div class="min-h-dvh overflow-hidden pb-[10px]">
+  <div class="min-h-dvh overflow-hidden pb-[10px] grid">
     <div
-      class="max-w-[--max-container-width] px-[--container-padding] m-auto w-full"
+      class="max-w-[--max-container-width] px-[--container-padding] m-auto w-full grid h-full content-start grid-rows-[auto,1fr]"
     >
       <TheNav />
       <RouterView />

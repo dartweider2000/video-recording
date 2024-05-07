@@ -29,7 +29,7 @@ export const useImageModeStore = defineStore("imageModeStore", () => {
     const imageBlob = await promise;
 
     resultBlobUrl.value = URL.createObjectURL(imageBlob);
-    await router.push("/result");
+    await router.push("/cropper");
 
     isMakingImage.value = false;
   };
