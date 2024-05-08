@@ -18,7 +18,7 @@
 <template>
   <div class="grid gap-[10px] grid-rows-[1fr,auto]">
     <TheCropper :to-cropp="toCropp" />
-    <ElButton type="success" @click="croppHandler">
+    <ElButton type="success" @click="croppHandler" :disabled="toCropp">
       <ElIcon class="el-icon--left" :size="20">
         <svg
           xmlns="http://www.w3.org/2000/svg"

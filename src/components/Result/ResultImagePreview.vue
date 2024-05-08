@@ -18,18 +18,8 @@
 
 <template>
   <MediaArea :loading="loading">
-    <img
-      v-show="!loading"
-      :src="resultBlobUrl"
-      ref="imageEl"
-      class="image"
-      alt="image-preview"
-    />
+    <img :src="resultBlobUrl" ref="imageEl" class="image" alt="image-preview" />
   </MediaArea>
 </template>
 
-<style scoped lang="scss">
-  .image {
-    @apply absolute top-0 left-0 w-full h-full object-cover object-center;
-  }
-</style>
+<style scoped lang="scss"></style>

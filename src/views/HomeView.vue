@@ -12,7 +12,7 @@
 
   const resultStore = useResultStore();
   const { modeList, selectedMode } = storeToRefs(resultStore);
-  const { refreshFileName } = resultStore;
+  const { refreshResult } = resultStore;
 
   const { isRecordingStarted } = storeToRefs(useVideoRecordingStore());
   const { isMakingImage } = storeToRefs(useImageModeStore());
@@ -22,7 +22,7 @@
   );
 
   onMounted(() => {
-    refreshFileName();
+    refreshResult();
   });
 </script>
 

@@ -18,18 +18,8 @@
 
 <template>
   <MediaArea :loading="loading">
-    <video
-      v-show="!loading"
-      :src="resultBlobUrl"
-      ref="videoEl"
-      class="video"
-      controls
-    ></video>
+    <video :src="resultBlobUrl" ref="videoEl" class="video" controls></video>
   </MediaArea>
 </template>
 
-<style scoped lang="scss">
-  .video {
-    @apply absolute top-0 left-0 w-full h-full object-cover object-center;
-  }
-</style>
+<style scoped lang="scss"></style>

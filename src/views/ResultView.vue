@@ -12,7 +12,7 @@
     ElInput,
     type FormInstance,
   } from "element-plus";
-  import { onUnmounted, ref } from "vue";
+  import { onBeforeMount, ref } from "vue";
   import { useRouter } from "vue-router";
   import { useNavigationStore } from "@/stores/navigationStore";
 
@@ -50,6 +50,10 @@
   const cropperButtonHandler = async () => {
     await router.push("/cropper");
   };
+
+  onBeforeMount(async () => {
+    if (!resultBlobUrl.value) await router.replace("/");
+  });
 </script>
 
 <template>

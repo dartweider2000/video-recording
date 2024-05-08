@@ -6,7 +6,6 @@ import { computed, ref } from "vue";
 
 export const useResultStore = defineStore("resultStore", () => {
   const resultBlobUrl = ref<string>("");
-  const videoDuration = ref<number>(0);
 
   const modeList = ref<IOption[]>([
     { name: "Фотография", mode: Mode.Photo },
@@ -19,8 +18,9 @@ export const useResultStore = defineStore("resultStore", () => {
     fileName: "my-media",
   });
 
-  const refreshFileName = () => {
+  const refreshResult = () => {
     formModel.value.fileName = "my-media";
+    resultBlobUrl.value = "";
   };
 
   const formRules = ref<FormRules<IResultForm>>({
@@ -42,13 +42,12 @@ export const useResultStore = defineStore("resultStore", () => {
 
   return {
     resultBlobUrl,
-    videoDuration,
     modeList,
     selectedMode,
     formModel,
     fileExtensionName,
     formRules,
     fileNameParser,
-    refreshFileName,
+    refreshResult,
   };
 });

@@ -32,18 +32,8 @@
 
 <template>
   <MediaArea :loading="isMediaStreamLoading">
-    <video
-      v-show="!isMediaStreamLoading"
-      ref="streamVideoEl"
-      class="video"
-      autoplay
-      muted
-    ></video>
+    <video ref="streamVideoEl" class="video" autoplay muted></video>
   </MediaArea>
 </template>
 
-<style scoped lang="scss">
-  .video {
-    @apply absolute top-0 left-0 w-full h-full object-cover object-center;
-  }
-</style>
+<style scoped lang="scss"></style>

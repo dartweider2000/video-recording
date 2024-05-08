@@ -27,11 +27,9 @@ export const useVideoRecordingStore = defineStore("videoRecordingStore", () => {
     mediaRecorder.value.addEventListener(
       "dataavailable",
       async ({ data }: BlobEvent) => {
-        const { resultBlobUrl, videoDuration: duration } =
-          storeToRefs(useResultStore());
+        const { resultBlobUrl } = storeToRefs(useResultStore());
 
         resultBlobUrl.value = URL.createObjectURL(data);
-        duration.value = videoDuration.value;
 
         await router.push("/result");
       },

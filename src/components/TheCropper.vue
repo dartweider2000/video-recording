@@ -1,9 +1,5 @@
 <script setup lang="ts">
-  import {
-    Cropper,
-    CircleStencil,
-    type CropperResult,
-  } from "vue-advanced-cropper";
+  import { Cropper, type CropperResult } from "vue-advanced-cropper";
   import MediaArea from "@/components/MediaArea.vue";
   import { onBeforeMount, ref, toRefs, watch } from "vue";
   import { useResultStore } from "@/stores/resultStore";
@@ -65,8 +61,4 @@
   </MediaArea>
 </template>
 
-<style scoped lang="scss">
-  .cropper {
-    @apply absolute top-0 left-0 w-full h-full object-cover object-center;
-  }
-</style>
+<style scoped lang="scss"></style>
