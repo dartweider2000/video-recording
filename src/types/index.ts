@@ -40,3 +40,5 @@ export interface ISize {
   width: number;
   height: number;
 }
+
+export type TransitionName = "front" | "back" | "none";
