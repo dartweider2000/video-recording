@@ -29,7 +29,7 @@
     fileExtensionName,
     formRules,
   } = storeToRefs(resultStore);
-  const { fileNameParser, refreshFileName } = resultStore;
+  const { fileNameParser } = resultStore;
 
   const formInstance = ref<FormInstance | null>(null);
 
@@ -50,10 +50,6 @@
   const cropperButtonHandler = async () => {
     await router.push("/cropper");
   };
-
-  onUnmounted(() => {
-    refreshFileName();
-  });
 </script>
 
 <template>

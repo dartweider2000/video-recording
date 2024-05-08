@@ -3,15 +3,22 @@
   import { useNavigationStore } from "@/stores/navigationStore";
   import { ElButton, ElIcon } from "element-plus";
   import { storeToRefs } from "pinia";
+  import { ref } from "vue";
 
   const { backLink } = storeToRefs(useNavigationStore());
   backLink.value = "/result";
+
+  const toCropp = ref<boolean>(false);
+
+  const croppHandler = async () => {
+    toCropp.value = true;
+  };
 </script>
 
 <template>
   <div class="grid gap-[10px] grid-rows-[1fr,auto]">
-    <TheCropper />
-    <ElButton type="success">
+    <TheCropper :to-cropp="toCropp" />
+    <ElButton type="success" @click="croppHandler">
       <ElIcon class="el-icon--left" :size="20">
         <svg
           xmlns="http://www.w3.org/2000/svg"

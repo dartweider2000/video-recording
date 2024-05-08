@@ -2,8 +2,9 @@ import { defineStore, storeToRefs } from "pinia";
 import { useHtmlElementsStore } from "@/stores/htmlElementsStore";
 import { useResultStore } from "@/stores/resultStore";
 import { ref } from "vue";
-import { useMediaStore } from "./mediaStore";
+import { useMediaStore } from "@/stores/mediaStore";
 import { useRouter } from "vue-router";
+import { getBlobFromCanvas } from "@/helpers/getBlobFromCanvas";
 
 export const useImageModeStore = defineStore("imageModeStore", () => {
   const router = useRouter();
@@ -23,10 +24,7 @@ export const useImageModeStore = defineStore("imageModeStore", () => {
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
     ctx.drawImage(streamVideoEl.value!, 0, 0, canvas.width, canvas.height);
-    const promise = new Promise<Blob>((resolve) =>
-      canvas.toBlob((blob) => resolve(blob!)),
-    );
-    const imageBlob = await promise;
+    const imageBlob = await getBlobFromCanvas(canvas);
 
     resultBlobUrl.value = URL.createObjectURL(imageBlob);
     await router.push("/result");

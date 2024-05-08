@@ -7,16 +7,23 @@
   import ImageMode from "@/components/Mode/ImageMode.vue";
   import { Mode } from "@/types";
   import { useVideoRecordingStore } from "@/stores/videoRecordingStore";
-  import { computed } from "vue";
+  import { computed, onMounted } from "vue";
   import { useImageModeStore } from "@/stores/imageModeStore";
 
-  const { modeList, selectedMode } = storeToRefs(useResultStore());
+  const resultStore = useResultStore();
+  const { modeList, selectedMode } = storeToRefs(resultStore);
+  const { refreshFileName } = resultStore;
+
   const { isRecordingStarted } = storeToRefs(useVideoRecordingStore());
   const { isMakingImage } = storeToRefs(useImageModeStore());
 
   const disableSelect = computed(
     () => isRecordingStarted.value || isMakingImage.value,
   );
+
+  onMounted(() => {
+    refreshFileName();
+  });
 </script>
 
 <template>
