@@ -4,11 +4,21 @@
   import { useMediaStore } from "@/stores/mediaStore";
   import { useNavigationStore } from "./stores/navigationStore";
   import { storeToRefs } from "pinia";
+  import { ElNotification } from "element-plus";
 
   const { initMediaStream } = useMediaStore();
   const { transitionName } = storeToRefs(useNavigationStore());
 
   onBeforeMount(async () => {
+    window.addEventListener("orientationchange", () => {
+      if (!window.orientation) return;
+
+      ElNotification({
+        title: "Пожалуйста, для корректой работы приложения, переверните экран",
+        type: "warning",
+      });
+    });
+
     await initMediaStream();
   });
 </script>

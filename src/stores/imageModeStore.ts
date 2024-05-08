@@ -21,8 +21,6 @@ export const useImageModeStore = defineStore("imageModeStore", () => {
     canvas.width = originalSize.value.width;
     canvas.height = originalSize.value.height;
 
-    console.log(canvas.width, canvas.height);
-
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
     ctx.drawImage(streamVideoEl.value!, 0, 0, canvas.width, canvas.height);
