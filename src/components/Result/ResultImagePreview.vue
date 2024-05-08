@@ -2,26 +2,24 @@
   import MediaArea from "@/components/MediaArea.vue";
   import { useResultStore } from "@/stores/resultStore";
   import { storeToRefs } from "pinia";
-  import { ref, watch } from "vue";
+  import { onMounted, ref } from "vue";
 
   const imageEl = ref<HTMLImageElement | null>(null);
   const { resultBlobUrl } = storeToRefs(useResultStore());
 
   const loading = ref<boolean>(true);
 
-  watch(
-    () => imageEl.value?.complete,
-    () => {
-      loading.value = !imageEl.value?.complete;
-    },
-    { immediate: true },
-  );
+  onMounted(() => {
+    imageEl.value?.addEventListener("load", () => {
+      loading.value = false;
+    });
+  });
 </script>
 
 <template>
   <MediaArea :loading="loading">
     <img
-      v-show="loading"
+      v-show="!loading"
       :src="resultBlobUrl"
       ref="imageEl"
       class="image"

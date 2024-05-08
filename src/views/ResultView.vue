@@ -14,8 +14,12 @@
   } from "element-plus";
   import { onUnmounted, ref } from "vue";
   import { useRouter } from "vue-router";
+  import { useNavigationStore } from "@/stores/navigationStore";
 
   const router = useRouter();
+
+  const { backLink } = storeToRefs(useNavigationStore());
+  backLink.value = "/";
 
   const resultStore = useResultStore();
   const {

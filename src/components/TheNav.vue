@@ -1,10 +1,14 @@
 <script setup lang="ts">
+  import { useNavigationStore } from "@/stores/navigationStore";
+  import { storeToRefs } from "pinia";
   import { computed, ref, watch } from "vue";
   import { useRoute, useRouter } from "vue-router";
 
   const route = useRoute();
   const router = useRouter();
   const path = computed(() => route.path);
+
+  const { backLink } = storeToRefs(useNavigationStore());
 
   const showBackArrow = ref<boolean>(false);
 
@@ -17,7 +21,7 @@
   );
 
   const backButtonClickHandler = async () => {
-    await router.push("/");
+    await router.push(backLink.value);
   };
 </script>
 

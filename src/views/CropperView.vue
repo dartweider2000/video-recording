@@ -1,6 +1,11 @@
 <script setup lang="ts">
   import TheCropper from "@/components/TheCropper.vue";
+  import { useNavigationStore } from "@/stores/navigationStore";
   import { ElButton, ElIcon } from "element-plus";
+  import { storeToRefs } from "pinia";
+
+  const { backLink } = storeToRefs(useNavigationStore());
+  backLink.value = "/result";
 </script>
 
 <template>
